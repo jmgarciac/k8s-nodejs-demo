@@ -7,6 +7,7 @@ Clone the project and build your docker image locally
 ```bash
 git clone https://github.com/jmgarciac/k8s-nodejs-demo.git
 cd openshift-nodejs-demo
+sed -i "s/Hello World/Hello World (said $USER) ;-)/g" app/server.js
 docker build -t ${USER}-nodejs:v1 .
 docker run -p 8080:8080 -d ${USER}-nodejs:v1
 ```
@@ -47,8 +48,8 @@ kubectl -n ${NS} get service
 
 Publish externally your application using the URL nodejs-${USER}.demo.org
 ``` bash
-kubectl -n ${NS} create ingress nodejs-ingress --class nginx-internal --rule "nodejs-${USER}.demo.org/*=nodejs-service:8080" --dry-run=client -o yaml
-kubectl -n ${NS} create ingress nodejs-ingress --class nginx-internal --rule "nodejs-${USER}.demo.org/*=nodejs-service:8080"
+kubectl -n ${NS} create ingress nodejs-ingress --class nginx --rule "nodejs-${USER}.demo.org/*=nodejs-service:8080" --dry-run=client -o yaml
+kubectl -n ${NS} create ingress nodejs-ingress --class nginx --rule "nodejs-${USER}.demo.org/*=nodejs-service:8080"
 kubectl -n ${NS} get ingress
 ```
 
