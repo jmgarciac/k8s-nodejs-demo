@@ -16,6 +16,7 @@ Setup your environment.
 ``` bash
 export NS="${USER}-demo"
 export REGISTRY_URL=<MY-REGISTRY>
+export PUBLIC_IP=<MY_IP>
 ```
 
 Create a namespace for your application deployment  
@@ -48,8 +49,13 @@ kubectl -n ${NS} get service
 
 Publish externally your application using the URL nodejs-${USER}.demo.org
 ``` bash
-kubectl -n ${NS} create ingress nodejs-ingress --class nginx --rule "nodejs-${USER}.demo.org/*=nodejs-service:8080" --dry-run=client -o yaml
-kubectl -n ${NS} create ingress nodejs-ingress --class nginx --rule "nodejs-${USER}.demo.org/*=nodejs-service:8080"
+kubectl -n ${NS} create ingress nodejs-ingress --class nginx --rule "nodejs-${USER}.${PUBLIC_IP}.nip.io/*=nodejs-service:8080" --dry-run=client -o yaml
+kubectl -n ${NS} create ingress nodejs-ingress --class nginx --rule "nodejs-${USER}.${PUBLIC_IP}.nip.io/*=nodejs-service:8080"
 kubectl -n ${NS} get ingress
+```
+
+Now you should be able to browse your brand new nodejs application in http://nodejs-${USER}.${PUBLIC_IP}.nip.io:  
+``` bash
+echo "Open your browser an paste the following URL: http://nodejs-${USER}.${PUBLIC_IP}.nip.io"
 ```
 
