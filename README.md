@@ -6,7 +6,7 @@ IMPORTANT: In order to complete the demo you will need to login your docker regi
 Clone the project and build your docker image locally:  
 ```bash
 git clone https://github.com/jmgarciac/k8s-nodejs-demo.git
-cd openshift-nodejs-demo
+cd k8s-nodejs-demo
 sed -i "s/Hello World/$USER says \"Hello World\" ;-)/g" app/server.js
 docker build -t ${USER}-nodejs:v1 .
 docker run -p 8080:8080 -d ${USER}-nodejs:v1
